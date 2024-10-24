@@ -14,8 +14,8 @@ contract ERC20 {
 
     uint256 public totalSupply;
     
-    mapping(address => uint256) public balanceOf;
-    mapping(address => mapping(address => uint256)) public allowance;
+    mapping(address => uint256) public balanceOf; // balanceOf[0x043453405...] = 67 
+    mapping(address => mapping(address => uint256)) public allowance; // allowance[0x043453405...][0x034453..] = 2
 
     // --- events ---
     

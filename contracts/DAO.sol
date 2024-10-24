@@ -12,14 +12,14 @@ contract DAO {
 
     struct Proposal {
         uint id;
-        string description;
+        string description; // i.e. send $5 to a charity in switzerland
         bool executed;
         uint256 count;
     }
 
     Proposal[] public proposals;
 
-    mapping(address => mapping( uint256 => bool)) public voters;
+    mapping(address => mapping(uint256 => bool)) public voters;
 
     event ProposalCreated(uint256 proposalId, string description);
     event Voted(uint256 proposalId, address voter);
@@ -51,8 +51,8 @@ contract DAO {
         // note: transfer a vote to the smart contract to vote on a proposal
         require(votes.transferFrom(msg.sender, address(this), 1), "Transfer Failed");
 
-        voters[msg.sender][proposal.id] = true;
         proposal.count += 1;
+        voters[msg.sender][proposal.id] = true;
 
         emit Voted(proposalId, msg.sender);
     }
@@ -64,7 +64,7 @@ contract DAO {
         require(!proposal.executed, "Proposal Already Executed");
 
         // note: must have number of votes > 100 to execute proposal
-        require(proposal.count > 100 * (10 ** votes.decimals()), "Not Enough Votes"); 
+        require(proposal.count > 100, "Not Enough Votes"); 
 
         // TODO logic to execute proposal
 
